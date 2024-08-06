@@ -1,0 +1,21 @@
+﻿
+@model List<ComputerStore.Models.Computer>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Model</h5>
+                        <p class="card-text">Brand: @item.Brands</p>
+                        <p class="card-text">Price: $@item.Price</p>
+                        <p class="card-text">Stock: @item.Stock</p>
+                        <a asp-controller="ComputerShop" asp-action="OrderDetails" asp-route-computerId="@item.Id" class="btn btn-primary">Buy</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

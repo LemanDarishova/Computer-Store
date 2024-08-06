@@ -1,0 +1,62 @@
+﻿@model ComputerStore.Models.Customer
+
+<h2>Edit Customer</h2>
+
+<div id="editForm">
+    <form id="customerForm">
+        <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+        <div class="form-group">
+            <label for="FirstName">First Name</label>
+            <input type="text" id="FirstName" name="FirstName" class="form-control" value="@Model.FirstName" required />
+        </div>
+        <div class="form-group">
+            <label for="LastName">Last Name</label>
+            <input type="text" id="LastName" name="LastName" class="form-control" value="@Model.LastName" required />
+        </div>
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="email" id="Email" name="Email" class="form-control" value="@Model.Email" required />
+        </div>
+        <div class="form-group">
+            <label for="PhoneNumber">Phone Number</label>
+            <input type="text" id="PhoneNumber" name="PhoneNumber" class="form-control" value="@Model.PhoneNumber" required />
+        </div>
+        <button type="button" id="saveButton" class="btn btn-primary">Save</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#saveButton').click(function () {
+                var customer = {
+                    Id: $('#Id').val(),
+                    FirstName: $('#FirstName').val(),
+                    LastName: $('#LastName').val(),
+                    Email: $('#Email').val(),
+                    PhoneNumber: $('#PhoneNumber').val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Edit", "Customer")',
+                    data: JSON.stringify(customer),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.success) {
+                            window.location.href = '@Url.Action("Index", "Customer")';
+                        } else {
+                            alert(response.message);
+                            console.log(response.errors);
+                        }
+                    },
+                    error: function (error) {
+                        alert('Error updating customer');
+                    }
+                });
+            });
+        });
+    </script>
+}

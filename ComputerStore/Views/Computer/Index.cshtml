@@ -1,0 +1,57 @@
+﻿
+@model List<Computer>
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-6">
+            <h1 class="fw-medium">Computer List</h1>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-action="Create" class="btn btn-primary btn-dark active" role="button"><i class="bi bi-plus-circle-dotted bi-white"></i></a>
+        </div>
+    </div>
+
+</div>
+
+<div>
+    <table class="table table-bordered table-sm table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Model</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Category</th>
+                <th>Size</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td>@obj.Id</td>
+                    <td>@obj.Model</td>
+                    <td>@obj.Brands</td>
+                    <td>@obj.Price AZN</td>
+                    <td>@obj.Stock</td>
+                    <td>@obj.Categorie.CategoryName</td>
+                    <td>@obj.Sizes.Description</td>
+                    <td class="text-end">
+                        <div class="d-inline-flex">
+                            <form asp-controller="Computer" asp-action="Delete" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@obj.Id" />
+                                <button type="submit" class="btn btn-danger btn-sm delete me-2">Delete</button>
+                            </form>
+                            <form asp-controller="Computer" asp-action="Edit" method="get" style="display:inline;">
+                                <input type="hidden" name="id" value="@obj.Id" />
+                                <button type="submit" class="btn btn-danger btn-sm update me-2">Update</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

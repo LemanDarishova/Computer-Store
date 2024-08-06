@@ -1,0 +1,38 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@model ComputerStore.Models.Computer
+
+<form asp-action="Edit" asp-controller="Computer" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="Model" class="control-label"></label>
+        <input asp-for="Model" class="form-control" />
+        <br />
+        <label asp-for="Brands" class="control-label"></label>
+        <input asp-for="Brands" class="form-control" />
+        <br />
+        <label asp-for="Price" class="control-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <br />
+        <label asp-for="Stock" class="control-label"></label>
+        <input asp-for="Stock" class="form-control" />
+        <br />
+        <div class="form-group">
+            <label asp-for="Sizes.Description" class="control-label">Size</label>
+            <input asp-for="Sizes.Description" class="form-control" />
+            <span asp-validation-for="Sizes.Description" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="form-group">
+            <label asp-for="Categorie.CategoryName" class="control-label">Category</label>
+            <input asp-for="Categorie.CategoryName" class="form-control" />
+            <span asp-validation-for="Categorie.CategoryName" class="text-danger"></span>
+        </div>
+
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button asp-action="Index"  type="submit" class="btn btn-primary">Back To List</button>
+    
+</form>
+

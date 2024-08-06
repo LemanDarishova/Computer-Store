@@ -1,0 +1,59 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@model ComputerStore.Models.Computer
+<form asp-action="Create" asp-controller="Computer" method="post" class="g-2">
+    <div class="row g-2">
+        <div class="form-group col-md-4">
+            <label>Computer Model</label>
+            <input type="text" asp-for=Model class="form-control">
+        </div>
+        <div class="form-group col-md-4">
+            <label>Computer Brand</label>
+            <input type="text" asp-for=Brands class="form-control">
+        </div>
+    </div>
+    <div class="row g-2">
+        <div class="form-group col-md-4">
+            <label>Computer Price</label>
+            <input type="text" asp-for=Price class="form-control">
+        </div>
+        <div class="form-group col-md-4">
+            <label>Computer Stock</label>
+            <input type="text" asp-for=Stock class="form-control">
+        </div>
+    </div>
+    <div class="row g-2">
+        <div>
+            <div class="form-group col-md-4">
+                <label>Category Name</label>
+                <select asp-for=Categorie.CategoryName class="form-control">
+                    <option selected>Choose...</option>
+                    <option>NetBook</option>
+                    <option>NoteBook</option>
+                    <option>Business</option>
+                    <option>Gaming</option>
+                    <option>Tablet</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <div class="form-group col-md-4">
+                <label>Computer Size</label>
+                <select asp-for=Sizes.Description class="form-control">
+                    <option selected>Choose...</option>
+                    <option>11-inch</option>
+                    <option>13-inch</option>
+                    <option>14-inch</option>
+                    <option>15-inch</option>
+                    <option>17-inch</option>
+                </select>
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <div class="d-grid gap-2 d-md-block">
+        <button type="submit" class="btn btn-outline-dark">Add </button>
+        <button asp-action="Index" class="btn btn-outline-dark">Back to List</button>
+    </div>
+
+</form>

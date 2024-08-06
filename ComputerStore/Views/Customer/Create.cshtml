@@ -1,0 +1,72 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@model ComputerStore.Models.Customer
+
+<form asp-action="Create" asp-controller="Customer" method="post" class="g-2" id="CreateForm">
+    <div class="row g-2">
+        <div class="form-group col-md-4">
+            <label>First Name</label>
+            <input type="text" id="FirstName" name="FirstName" class="form-control" value="@Model.FirstName" />
+        </div>
+        <div class="form-group col-md-4">
+            <label>Last Name</label>
+            <input type="text" id="LastName" name="LastName" class="form-control" value="@Model.LastName" />
+        </div>
+    </div>
+
+    <div class="row g-2">
+        <div class="form-group col-md-4">
+            <label>Email</label>
+            <input type="text" id="Email" name="Email" class="form-control" value="@Model.Email" />
+        </div>
+        <div class="form-group col-md-4">
+            <label>Phone Number</label>
+            <input type="text" id="PhoneNumber" name="PhoneNumber" class="form-control" value="@Model.PhoneNumber" />
+        </div>
+    </div>
+
+    <br>
+    <div class="d-grid gap-2 d-md-block">
+        <button type="submit" class="btn btn-outline-dark">Create</button>
+        <a asp-action="Index" asp-controller="Customer" class="btn btn-outline-dark">Back to List</a>
+    </div>
+</form>
+
+<div id="message"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#CreateForm").submit(function (event) {
+            event.preventDefault();
+
+            var formData = {
+                FirstName: $("#FirstName").val(),
+                LastName: $("#LastName").val(),
+                Email: $("#Email").val(),
+                PhoneNumber: $("#PhoneNumber").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Create", "Customer")',
+                data: formData,
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        $("#message").html("<div style='color:green;'>" + response.message + "</div>");
+                    } else {
+                        let errorList = "<ul>";
+                        $.each(response.errors, function (index, error) {
+                            errorList += "<li>" + error + "</li>";
+                        });
+                        errorList += "</ul>";
+                        $("#message").html("<div style='color:red;'>" + response.message + errorList + "</div>");
+                    }
+                },
+                error: function () {
+                    $("#message").html("<div style='color:red;'>An error occurred while creating the customer.</div>");
+                }
+            });
+        });
+    });
+</script>

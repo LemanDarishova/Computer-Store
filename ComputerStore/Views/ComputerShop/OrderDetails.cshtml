@@ -1,0 +1,74 @@
+﻿@model ComputerStore.Models.OrderDetailsViewModel
+
+<div class="container">
+    <h2>Order Details</h2>
+
+    <form asp-action="SubmitOrder" method="post">
+        <div class="form-group">
+            <label for="computerModel">Computer Model:</label>
+            <input type="text" class="form-control" id="computerModel" value="@Model.Order.Computer.Model" readonly />
+        </div>
+
+        <div class="form-group">
+            <label for="FirstName">First Name:</label>
+            <input type="text" class="form-control" id="FirstName" name="Customer.FirstName" />
+        </div>
+
+        <div class="form-group">
+            <label for="LastName">Last Name:</label>
+            <input type="text" class="form-control" id="LastName" name="Customer.LastName" />
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Email:</label>
+            <input type="email" class="form-control" id="Email" name="Customer.Email" />
+        </div>
+
+        <div class="form-group">
+            <label for="PhoneNumber">Phone Number:</label>
+            <input type="tel" class="form-control" id="PhoneNumber" name="Customer.PhoneNumber" />
+        </div>
+
+        <div class="form-group">
+            <label for="Quantity">Quantity:</label>
+            <input type="number" class="form-control" id="Quantity" name="Order.Quantity" />
+        </div>
+
+        <input type="hidden" name="Order.ComputerId" value="@Model.Order.ComputerId" />
+        <button type="submit" class="btn btn-primary mt-3">Add</button>
+    </form>
+
+    <h3 class="mt-5">Order List</h3>
+    <table class="table table-bordered table-sm table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Customer Name</th>
+                <th>Computer Model</th>
+                <th>Quantity</th>
+                <th>Order Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Orders != null && Model.Orders.Any()) 
+            {
+                @foreach (var obj in Model.Orders)
+                {
+                    <tr>
+                        <td>@obj.Id</td>
+                        <td>@obj.Customer?.FirstName @obj.Customer?.LastName</td>
+                        <td>@obj.Computer.Model</td>
+                        <td>@obj.Quantity</td>
+                        <td>@obj.Order_date</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">No orders available.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,79 @@
+﻿@model List<Customer>
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-6">
+            <h1 class="fw-medium">Customer List</h1>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-action="Create" class="btn btn-primary btn-dark active" role="button"><i class="bi bi-plus-circle-dotted bi-white"></i></a>
+        </div>
+    </div>
+
+</div>
+
+<div>
+    <table class="table table-bordered table-sm table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td>@obj.Id</td>
+                    <td>@obj.FirstName</td>
+                    <td>@obj.LastName</td>
+                    <td>@obj.Email</td>
+                    <td>@obj.PhoneNumber</td>
+                    <td class="text-end">
+                        <div class="d-inline-flex">                               
+                                <button type="submit" class="btn btn-danger btn-sm delete me-2" onclick="(Are you sure?)">Delete</button>
+                            <form asp-controller="Customer" asp-action="Edit" method="get" style="display:inline;">
+                                <input type="hidden" name="id" value="@obj.Id" />
+                                <button type="submit" class="btn btn-danger btn-sm update me-2">Update</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".delete").click(function (e) {
+            e.preventDefault();
+            var parent = $(this).closest("tr");
+            var id = parent.find("td:eq(0)").text();
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Delete")",
+                data: { id: id },
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        parent.hide("slow"); 
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("An unexpected error occurred: " + error);
+                    console.log("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
+                }
+            });
+        });
+    });
+</script>
+
